@@ -26,7 +26,7 @@ const Actions = ({ matches }) => {
           </ListItemText>
         )}
 
-        {user.role === CONSUMER ? (
+        { user && user.role === CONSUMER ? (
           <ListItemText>
             <Typography>Post Jobs</Typography>
           </ListItemText>
