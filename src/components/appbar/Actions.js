@@ -26,9 +26,14 @@ const Actions = ({ matches }) => {
           </ListItemText>
         )}
 
-        { user && user.role === CONSUMER ? (
+        {user && user.role === CONSUMER ? (
           <ListItemText>
-            <Typography>Post Jobs</Typography>
+            <Link
+              to={"/job/create"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Typography>Post Jobs</Typography>
+            </Link>
           </ListItemText>
         ) : (
           <ListItemText>

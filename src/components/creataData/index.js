@@ -7,14 +7,19 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
-import { getJob } from "../../api";
+import { useNavigate, useParams } from "react-router";
+import { createJob, getJob, updateJob } from "../../api";
+import { useSelector } from "react-redux";
 
 const theme = createTheme();
 
 export default function Upsert() {
   const imageRef = useRef();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const user = useSelector((redux_store) => {
+    return redux_store.user.data;
+  });
   const [formData, setFormData] = useState({
     title: "",
     images: [],
@@ -125,12 +130,13 @@ export default function Upsert() {
       });
     }
     const data = new FormData();
-    data.append("name", formData.title);
+    data.append("title", formData.title);
     data.append("price", formData.price);
     data.append("description", formData.description);
     data.append("location[state]", formData.state);
     data.append("location[city]", formData.city);
     data.append("location[postalcode]", formData.postalcode);
+    data.append("user_id", user.id);
 
     formData.categories.forEach((category) => {
       data.append("categories[]", category);
@@ -140,15 +146,20 @@ export default function Upsert() {
         data.append("images", img);
       });
     }
-    // try {
-    //   if (id) {
-    //     updateformData(id, data).then((res) => console.log(res.data));
-    //   } else {
-    //     uploadformDatas(data).then((res) => console.log(res.data));
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      if (id) {
+        updateJob(id, data).then((res) => {
+          console.log(res.data);
+        });
+      } else {
+        createJob(data).then((res) => {
+          console.log(res.data);
+          navigate("/");
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
     console.log(JSON.stringify(Object.fromEntries(data.entries())));
   };
 
@@ -183,7 +194,7 @@ export default function Upsert() {
                   name="title"
                   helperText={err.title && err.title}
                   autoFocus
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -194,7 +205,7 @@ export default function Upsert() {
                   label="Starting price"
                   name="price"
                   helperText={err.price && err.price}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -205,7 +216,7 @@ export default function Upsert() {
                   label="State Name"
                   name="state"
                   helperText={err.state && err.state}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -216,7 +227,7 @@ export default function Upsert() {
                   label="City Name"
                   name="city"
                   helperText={err.city && err.city}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -227,7 +238,7 @@ export default function Upsert() {
                   label="Postal Code"
                   name="postalcode"
                   helperText={err.postalcode && err.postalcode}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -238,7 +249,7 @@ export default function Upsert() {
                   label="Type Design Categories like shirt, pants, traditional."
                   name="categories"
                   helperText={err.categories && err.categories}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -249,7 +260,7 @@ export default function Upsert() {
                   label="Write about your job details and requirements"
                   id="description"
                   helperText={err.description && err.description}
-                  onClick={handleChange}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>

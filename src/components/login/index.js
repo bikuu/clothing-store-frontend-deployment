@@ -20,7 +20,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    email: "bibek@gmail.com",
+    email: "bikuu@gmail.com",
     password: "password",
   });
 
@@ -28,7 +28,7 @@ export const Login = () => {
     e.preventDefault();
     logIn(formData).then((res) => {
       console.log(res.data.data);
-      dispatch(setUser(res.data.data)); // cannot call setUser function direction, instaed we should use dispatch
+      dispatch(setUser(res.data.data)); 
       localStorage.setItem(
         "access_token",
         JSON.stringify(res.data.token.token)
