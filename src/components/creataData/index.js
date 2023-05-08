@@ -79,7 +79,7 @@ export default function Upsert() {
   useEffect(() => {
     if (id) {
       getJob(id).then((res) => {
-        // setformData(res.data.data);
+        // setFormData(res.data.data);
         console.log(res);
       });
     }

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container, Grid, Typography } from "@mui/material";
 import DataCardMobile from "./DataCardMobile";
 import DataCardDesktop from "./DataCardDesktop";
-import { getAllJobs } from "../../api";
+import { getAllGigs, getAllJobs } from "../../api";
 import { allData } from "../../redux/slice/dataSlice";
 import { useEffect } from "react";
 import { CONSUMER } from "./../../constants/role";
@@ -15,6 +15,16 @@ const DataList = ({ matches }) => {
   // const limit = 8;
   // const totalPages = Math.ceil(products?.length / limit);
   useEffect(() => {
+    // if (user.role === CONSUMER) {
+    //   getAllGigs()
+    //     .then((res) => {
+    //       dispatch(allData(res.data.datas));
+    //       console.log(res.data.datas);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // } else {
     getAllJobs()
       .then((res) => {
         dispatch(allData(res.data.datas));
@@ -23,6 +33,7 @@ const DataList = ({ matches }) => {
       .catch((err) => {
         console.log(err);
       });
+    // }
   }, []);
 
   const renderDatas = datas?.map((data) => (

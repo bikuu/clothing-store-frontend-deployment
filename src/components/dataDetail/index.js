@@ -78,7 +78,7 @@ const DataDetail = () => {
             Description : <CustomizedText>{result?.description}</CustomizedText>
           </span>
           {user.id === result.user_id ? (
-            <Link to={`/edit/${id}`}>
+            <Link to={`/job/edit/${id}`}>
               {" "}
               <Button>Edit</Button>
             </Link>

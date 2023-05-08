@@ -13,6 +13,8 @@ import { Colors } from "../../style/theme";
 import { useSelector, useDispatch } from "react-redux";
 import { setDrawer } from "../../redux/slice/drawerSlice";
 import { logoutUser } from "../../api";
+import { logout } from "../../redux/slice/userSlice";
+import { useNavigate } from "react-router";
 
 const MiddleDivider = styled((props) => (
   <Divider variant="middle" {...props} />
@@ -20,12 +22,17 @@ const MiddleDivider = styled((props) => (
 
 const AppDrawer = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const drawerOpen = useSelector((state) => state.drawer.data);
 
   const handleLogout = () => {
-    // localStorage.removeItem("access_token")
-    dispatch(logoutUser());
+    localStorage.removeItem("access_token");
+    dispatch(logout());
+    logoutUser().then((res) => {
+      if (res.data.msg) {
+        navigate("/");
+      }
+    });
   };
 
   const handleSetData = () => {
