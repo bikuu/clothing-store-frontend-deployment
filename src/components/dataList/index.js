@@ -46,7 +46,7 @@ const DataList = ({ matches }) => {
   return (
     <>
       <Typography textAlign="center" variant="h4" padding="5px">
-        {user.role === CONSUMER ? "List of Workfolio" : "List of Jobs"}
+        {user && user.role === CONSUMER ? "List of Workfolio" : "List of Jobs"}
       </Typography>
       <Container>
         <Grid
