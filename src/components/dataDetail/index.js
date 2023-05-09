@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getJob } from "./../../api/index";
 import { Link } from "react-router-dom";
+import ImageNotFound from "../../assets/images/ImageNotFound.jpg";
+
 const DataDetail = () => {
   const [result, setResult] = useState({});
 
@@ -34,9 +36,9 @@ const DataDetail = () => {
     <>
       <DetailContainer>
         <ImageContainer overflow={"hidden"}>
-          {result?.images?.map((image, idx) => (
-            <ImageSlide src={image} />
-          ))}
+          {/* {result?.images?.map((image, idx) => ( */}
+          <ImageSlide src={result.images ? result.images[0] : ImageNotFound} />
+          {/* ))} */}
         </ImageContainer>
         <InfoContainer>
           <span>
